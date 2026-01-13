@@ -1,0 +1,19 @@
+# Telegram Bot
+python-telegram-bot==20.7
+
+# Google API
+google-api-python-client==2.108.0
+google-auth-oauthlib==1.2.0
+google-auth-httplib2==0.2.0
+
+# HTTP
+requests==2.31.0
+
+# JSON and datetime (built-in, but documented)
+# json - standard library
+# datetime - standard library
+
+# Development (optional)
+python-dotenv==1.0.0
+
+# Note: For local testing, create credentials.json from Google Cloud Console
