@@ -15,6 +15,9 @@ import os
 import re
 import time
 import logging
+import base64
+import uuid
+import json
 from typing import Optional, List, Dict, Tuple, Any
 from datetime import datetime
 import requests
@@ -299,7 +302,7 @@ async def add_training(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     parsed = parse_training_message(message_text)
     if parsed:
         row = [
-            datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+            datetime.now().strftime("%Y-%m-%d %H:%M"),
             parsed["type"],
             str(parsed["duration"]),
             str(parsed["calories"])
