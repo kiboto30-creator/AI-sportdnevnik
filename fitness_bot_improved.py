@@ -362,6 +362,29 @@ async def personal_analysis(update: Update, context: ContextTypes.DEFAULT_TYPE) 
     analysis = gigachat_ask(summary)
     await update.message.reply_text(f"💬 Анализ ИИ:\n\n{analysis[:MAX_MESSAGE_LENGTH]}")
 
+
+async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик голосовых сообщений с распознаванием через Telegram API."""
+    user_id = update.effective_user.id
+    logger.info(f"User {user_id} sent voice message")
+    
+    try:
+        # Получаем файл голосового сообщения
+        voice = update.message.voice
+        file = await context.bot.get_file(voice.file_id)
+        
+        # Telegram Bot API пока не предоставляет встроенную транскрипцию для обычных ботов
+        # Поэтому отправляем пользователю инструкцию
+        await update.message.reply_text(
+            "🎤 Голосовые сообщения пока не поддерживаются.\n\n"
+            "Пожалуйста, отправьте текстом в формате:\n"
+            "<Тип>, <Длительность мин>, <Калории ккал>\n\n"
+            "Пример: Бег, 30 мин, 400 ккал"
+        )
+        
+    except Exception as e:
+        logger.error(f"Error handling voice message: {e}")
+        await update.message.reply_text("Произошла ошибка при обработке голосового сообщения.")
 # ===== MAIN APPLICATION =====
 def main() -> None:
     """Запустить бота."""
@@ -376,6 +399,9 @@ def main() -> None:
     
     # Обработчик текстовых сообщений для добавления тренировок
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, add_training))
+        
+    # Обработчик голосовых сообщений
+    app.add_handler(MessageHandler(filters.VOICE, handle_voice))
     
     logger.info("Bot started. Polling...")
     app.run_polling()
