@@ -18,6 +18,9 @@ import logging
 import base64
 import uuid
 import json
+import wave
+from vosk import Model, KaldiRecognizer
+from pydub import AudioSegment
 from typing import Optional, List, Dict, Tuple, Any
 from datetime import datetime
 import requests
