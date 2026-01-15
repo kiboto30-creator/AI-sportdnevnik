@@ -1,162 +1,119 @@
-# 🏋️ AI Sportdnevnik - AI-powered Sports Diary
+# 🏋️ AI Спортдневник - AI-powered спортивный дневник
 
-Telegram bot + Google Sheets integration for tracking training sessions with AI-powered analysis using GigaChat.
+Telegram-бот для отслеживания тренировок с интеграцией AI (GigaChat) и автоматическим логированием в Google Sheets.
 
-## Features
+## Возможности
 
-✅ **Telegram Bot Commands:**
-- `/start` - Introduction and help
-- `/report` - Weekly training report from GigaChat
-- `/analysis` - Personal sports analysis and recommendations
-- Send text messages to log training (e.g., "Коньки 45 мин, легко")
+- 💬 **AI-ассистент**: Анализ тренировок через GigaChat AI
+- 🗣️ **Голосовые заметки**: Отправка тренировок голосом (автоматическое распознавание речи)
+- 📊 **Google Sheets интеграция**: Автоматическое сохранение всех тренировок
+- ⏰ **Напоминания**: Умные напоминания о тренировках
+- 📈 **Статистика**: Анализ прогресса и трендов
+- 🔄 **Режимы**: Голосовой и текстовый ввод
 
-✅ **Google Sheets Integration:**
-- Auto-save training data to Google Sheets
-- Read last 7-10 sessions for reports/analysis
-- Support for date, activity, duration, feeling, weight tracking
+## Установка и настройка
 
-✅ **GigaChat AI:**
-- Automatic training session analysis
-- Weekly performance reports
-- Personalized recommendations
-- Error handling and fallback mode
+### 1. Клонирование репозитория
 
-## Setup
-
-### 1. Clone Repository
-```bash
-git clone https://github.com/kiboto30-creator/AI-sportdnevnik.git
+\`\`\`bash
+git clone https://github.com/kiboto30/AI-sportdnevnik.git
 cd AI-sportdnevnik
-```
+\`\`\`
 
-### 2. Install Dependencies
-```bash
+### 2. Установка зависимостей
+
+\`\`\`bash
 pip install -r requirements.txt
-```
+\`\`\`
 
-### 3. Configure Environment
+### 3. Настройка окружения
 
-**Create `.env` file (copy from `.env.example`):**
-```bash
+**Создайте файл \`.env\` (скопируйте из \`.env.example\`):**
+
+\`\`\`bash
 cp .env.example .env
-```
+\`\`\`
 
-**Fill in your credentials:**
-```
-TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
-GIGACHAT_CLIENT_ID=your_gigachat_client_id_here
-GIGACHAT_CLIENT_SECRET=your_gigachat_client_secret_here
-GOOGLE_SHEET_ID=your_google_sheet_id_here
+**Заполните переменные в \`.env\`:**
+
+\`\`\`
+TELEGRAM_BOT_TOKEN=ваш_токен_telegram_бота
+GIGACHAT_CLIENT_ID=ваш_gigachat_client_id
+GIGACHAT_CLIENT_SECRET=ваш_gigachat_client_secret
+GOOGLE_SHEET_ID=ваш_google_sheet_id
 GOOGLE_CREDENTIALS_JSON=credentials.json
+\`\`\`
+
+### 4. Настройка Google Sheets
+
+1. Создайте [Google Cloud Project](https://console.cloud.google.com/)
+2. Включите Google Sheets API
+3. Создайте Service Account
+4. Скачайте JSON credentials как \`credentials.json\`
+5. Поделитесь Google Sheet с email сервисного аккаунта
+
+### 5. Настройка Telegram бота
+
+1. Создайте бота через [@BotFather](https://t.me/botfather) в Telegram
+2. Получите токен бота и добавьте в \`.env\`
+
+### 6. Получение GigaChat API
+
+1. Зарегистрируйтесь на [GigaChat](https://developers.sber.ru/gigachat)
+2. Создайте приложение и получите Client ID и Secret
+3. Добавьте данные в \`.env\`
+
+## Запуск бота
+
+\`\`\`bash
+python fitness_bot_improved.py
+\`\`\`
+
+## Использование
+
+### Команды бота:
+
+- \`/start\` - Начало работы с ботом
+- \`/help\` - Справка по командам
+- \`/voice\` - Переключиться в голосовой режим
+- \`/text\` - Переключиться в текстовый режим
+- \`/stats\` - Показать статистику тренировок
+
+### Примеры тренировок:
+
+**Текстовый режим:**
+```
+Бег 5 км за 25 минут
+Жим лежа 80 кг, 4 подхода по 10 раз
 ```
 
-### 4. Google Sheets Setup
+**Голосовой режим:**
+Просто отправьте голосовое сообщение с описанием тренировки!
 
-1. Create a [Google Cloud Project](https://console.cloud.google.com/)
-2. Enable Google Sheets API
-3. Create a Service Account
-4. Download JSON credentials as `credentials.json`
-5. Share your Google Sheet with the service account email
+## Демо-данные
 
-### 5. Telegram Bot Setup
-
-1. Create bot with [@BotFather](https://t.me/botfather) on Telegram
-2. Get bot token and add to `.env`
-
-### 6. GigaChat Setup
-
-1. Register at [GigaChat](https://gigachat.devices.sberbank.ru/)
-2. Get CLIENT_ID and CLIENT_SECRET
-3. Add to `.env`
-
-## Usage
-
-### Run Bot
-```bash
-python fitness_bot.py
-```
-
-### Telegram Commands
-
-**Start Bot:**
-```
-/start
-```
-
-**Log Training (send text):**
-```
-Коньки, 45 мин, легко
-Бег, 5 км, усталость средняя
-Зал турник, 30 мин, хорошо
-```
-
-**Get Weekly Report:**
-```
-/report
-```
-
-**Get Analysis:**
-```
-/analysis
-```
-
-## Project Structure
-
-```
-├── fitness_bot.py          # Main bot code
-├── requirements.txt        # Python dependencies
-├── .env                    # Environment variables (git-ignored)
-├── .env.example           # Template for .env
-├── .gitignore             # Git ignore rules
-├── credentials.json        # Google API credentials (git-ignored)
-└── README.md              # This file
-```
-
-## Technical Details
-
-### Technologies Used
-- **python-telegram-bot** - Telegram bot framework
-- **Google Sheets API** - Data storage and retrieval
-- **GigaChat API** - AI analysis and report generation
-- **python-dotenv** - Environment variable management
-
-### Error Handling
-- Graceful fallback to demo data if Google Sheets unavailable
-- Try-except blocks for GigaChat API failures
-- User-friendly error messages
-
-## Security
-
-⚠️ **Important:**
-- Never commit `.env` or `credentials.json` to Git
-- Use `.gitignore` to protect sensitive files
-- Keep your API keys confidential
-- Regenerate keys if they're exposed
-
-## Demo Data
-
-If Google Sheets is not configured, bot uses demo training data:
+Если Google Sheets не настроен, бот использует демо-данные для тренировок:
 - 13.01.2026: Коньки 45 мин, легко
-- 14.01.2026: Зал турник 30 мин, усталость средняя
+- 14.01.2026: Зал турник 30 мин, усталость средняя  
 - 15.01.2026: Бег 5 км, стандартно
 
-## Future Improvements
+## Будущие улучшения
 
-- [ ] Advanced text parsing for training data
-- [ ] Weight tracking with trends
-- [ ] Photo support for training logs
-- [ ] Leaderboard for multi-user tracking
-- [ ] Mobile app integration
-- [ ] Data visualization and charts
+- [ ] Продвинутый парсинг текста тренировок
+- [ ] Отслеживание веса с трендами
+- [ ] Поддержка фото для тренировок
+- [ ] Лидерборд для нескольких пользователей
+- [ ] Интеграция мобильного приложения
+- [ ] Визуализация данных и графики
 
-## License
+## Лицензия
 
-MIT License - feel free to use for personal projects
+MIT License - свободно используйте для личных проектов
 
-## Support
+## Поддержка
 
-For issues or questions, open an issue on GitHub.
+По вопросам и проблемам создавайте issue на GitHub.
 
 ---
 
-**Made with ❤️ for fitness enthusiasts**
+**Сделано с ❤️ для фитнес-энтузиастов!**
