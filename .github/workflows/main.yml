@@ -32,7 +32,5 @@ jobs:
           cp $GITHUB_WORKSPACE/fitness_bot_improved.py .
           cp $GITHUB_WORKSPACE/visuals.py .
           cp $GITHUB_WORKSPACE/requirements.txt .
-          if [ ! -z "$GOOGLE_CREDENTIALS_JSON_PATH" ]; then
-            echo "$GOOGLE_CREDENTIALS_JSON_PATH" > credentials.json
-          fi
-          timeout 1740 python fitness_bot_improved.py || true
+          echo '${{ secrets.GOOGLE_CREDENTIALS_JSON_PATH }}' > credentials.json
+          timeout 1740 python fitness_bot_improved.py || trueout 1740 python fitness_bot_improved.py || true
