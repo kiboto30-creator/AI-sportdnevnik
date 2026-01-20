@@ -1,0 +1,38 @@
+name: AI Sportdnevnik Bot
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Запускается каждые 30 минут
+  workflow_dispatch:  # Ручной запуск
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Run Telegram Bot
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+          GOOGLE_CREDENTIALS_JSON_PATH: ${{ secrets.GOOGLE_CREDENTIALS_JSON_PATH }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          mkdir -p /tmp/bot
+          cd /tmp/bot
+          cp $GITHUB_WORKSPACE/fitness_bot_improved.py .
+          cp $GITHUB_WORKSPACE/visuals.py .
+          cp $GITHUB_WORKSPACE/requirements.txt .
+          if [ ! -z "$GOOGLE_CREDENTIALS_JSON_PATH" ]; then
+            echo "$GOOGLE_CREDENTIALS_JSON_PATH" > credentials.json
+          fi
+          timeout 1740 python fitness_bot_improved.py || true
