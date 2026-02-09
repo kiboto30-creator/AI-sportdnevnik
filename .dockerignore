@@ -1,1 +1,13 @@
-
+.env
+credentials.json
+__pycache__
+*.pyc
+.git
+.gitignore
+README.md
+visuals.py
+*.png
+*.jpg
+test_*.py
+.vscode
+.idea
